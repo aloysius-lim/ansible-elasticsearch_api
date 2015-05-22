@@ -16,10 +16,10 @@ install:
 
 # Wait for Elasticsearch to spin up
 before_script:
-  - sleep 10
-  - ifconfig
-  - hostname
-  - curl http://localhost:9200/
+  - export HOST_IP=$(ifconfig venet0 | grep -Eo 'inet addr:[0-9]+\.[0-9]+\.[0-9]\.[0-9]+' | grep -Eo '[0-9]+\.[0-9]+\.[0-9]\.[0-9]+')
+  - echo "$HOST_IP"
+  - sed -i "s/127\.0\.0\.1/$HOST_IP/" /vagrant/inventory
+  - curl http://localhost:9200/_nodes?pretty
 
 script:
   - ./run 'docker build -f tests/$PLATFORM.Dockerfile -t test-$PLATFORM . && docker run --name $PLATFORM test-$PLATFORM'
