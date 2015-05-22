@@ -17,6 +17,9 @@ install:
 # Wait for Elasticsearch to spin up
 before_script:
   - sleep 10
+  - ifconfig
+  - hostname
+  - curl http://localhost:9200/
 
 script:
   - ./run 'docker build -f tests/$PLATFORM.Dockerfile -t test-$PLATFORM . && docker run --name $PLATFORM test-$PLATFORM'
