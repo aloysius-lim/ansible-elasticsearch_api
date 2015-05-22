@@ -26,9 +26,9 @@ Operating System | Release | Status                                             
 ---------------- | ------- | ------                                                                                                                                                                                                    |
 centos           | 6       | [![Vagrant passed](https://img.shields.io/badge/vagrant-passed-brightgreen.svg?style=flat-square)](#) [![Docker passed](https://img.shields.io/badge/docker-passed-brightgreen.svg?style=flat-square)](#) |
 centos           | 7       | [![Vagrant passed](https://img.shields.io/badge/vagrant-passed-brightgreen.svg?style=flat-square)](#) [![Docker passed](https://img.shields.io/badge/docker-passed-brightgreen.svg?style=flat-square)](#) |
-debian           | wheezy  | [![Vagrant passed](https://img.shields.io/badge/vagrant-passed-brightgreen.svg?style=flat-square)](#) |
-debian           | jessie  | [![Vagrant passed](https://img.shields.io/badge/vagrant-passed-brightgreen.svg?style=flat-square)](#) |
-ubuntu           | precise | [![Vagrant passed](https://img.shields.io/badge/vagrant-passed-brightgreen.svg?style=flat-square)](#) |
+debian           | wheezy  | [![Vagrant passed](https://img.shields.io/badge/vagrant-passed-brightgreen.svg?style=flat-square)](#) [![Docker passed](https://img.shields.io/badge/docker-passed-brightgreen.svg?style=flat-square)](#) |
+debian           | jessie  | [![Vagrant passed](https://img.shields.io/badge/vagrant-passed-brightgreen.svg?style=flat-square)](#) [![Docker passed](https://img.shields.io/badge/docker-passed-brightgreen.svg?style=flat-square)](#) |
+ubuntu           | precise | [![Vagrant passed](https://img.shields.io/badge/vagrant-passed-brightgreen.svg?style=flat-square)](#) [![Docker passed](https://img.shields.io/badge/docker-passed-brightgreen.svg?style=flat-square)](#) |
 ubuntu           | trusty  | [![Vagrant passed](https://img.shields.io/badge/vagrant-passed-brightgreen.svg?style=flat-square)](#) [![Docker passed](https://img.shields.io/badge/docker-passed-brightgreen.svg?style=flat-square)](#) |
 
 ## Requirements

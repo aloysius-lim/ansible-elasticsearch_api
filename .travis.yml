@@ -14,9 +14,8 @@ sudo: true
 install:
   - curl -sLo - https://github.com/moul/travis-docker/raw/master/install.sh | sh -xe
 
-# Wait for Elasticsearch to spin up
+# Write elasticsearch IP address into inventory
 before_script:
-  # - export HOST_IP=$(ifconfig venet0 | grep -Eo 'inet addr:[0-9]+\.[0-9]+\.[0-9]\.[0-9]+' | grep -Eo '[0-9]+\.[0-9]+\.[0-9]\.[0-9]+')
   - curl 'http://localhost:9200/_nodes?pretty'
   - export HOST_IP=$( curl 'http://localhost:9200/_nodes?pretty' | grep 'http_address' | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' )
   - echo "$HOST_IP"
