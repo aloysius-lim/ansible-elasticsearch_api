@@ -1,0 +1,8 @@
+---
+- name: Install elasticsearch-py
+  pip: name=elasticsearch state={{ es_py_state }}
+  when: es_py_install == true and es_py_version == none
+
+- name: Install elasticsearch-py
+  pip: name=elasticsearch version={{ es_py_version }} state={{ es_py_state }}
+  when: es_py_install == true and es_py_version != none

@@ -1,0 +1,10 @@
+---
+- hosts: test
+  become: yes
+  become_method: sudo
+  roles:
+    - pip
+
+- include: test_install_version.yml
+- include: test_install_latest.yml
+- include: test_api_calls.yml

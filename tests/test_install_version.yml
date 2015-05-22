@@ -1,0 +1,16 @@
+---
+- hosts: test
+  become: yes
+  become_method: sudo
+  roles:
+    - role: ../../
+      es_py_version: 1.4.0
+  post_tasks:
+    - name: Check for python elasticsearch module
+      shell: python -c "from __future__ import print_function; import elasticsearch; print(elasticsearch.__versionstr__)"
+      register: python_result
+      changed_when: python_result.rc != 0
+    - name: Verify that the right version of elasticsearch-py is installed
+      assert:
+        that:
+          - python_result.stdout == es_py_version

@@ -1,0 +1,4 @@
+---
+es_py_version:
+es_py_state: present
+es_py_install: true

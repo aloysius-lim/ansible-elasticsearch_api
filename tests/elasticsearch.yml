@@ -1,0 +1,6 @@
+---
+- hosts: elasticsearch
+  become: yes
+  become_method: sudo
+  roles:
+    - elasticsearch

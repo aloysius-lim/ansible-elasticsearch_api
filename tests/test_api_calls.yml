@@ -1,0 +1,110 @@
+---
+- hosts: test
+  tasks:
+    - name: Delete indices to prepare for tests
+      elasticsearch_api:
+        hosts: "{{ groups['elasticsearch'] }}"
+        api: indices
+        function: delete
+        function_args:
+          index: test-*
+      ignore_errors: True
+
+    - name: Call indices API (create index)
+      elasticsearch_api:
+        hosts: "{{ groups['elasticsearch'] }}"
+        api: indices
+        function: create
+        function_args:
+          index: test-1
+      register: elasticsearch_api_result
+    - name: Verify that request is acknowledged
+      assert:
+        that: elasticsearch_api_result.result.acknowledged == true
+
+    - name: Call elasticsearch API (create documents)
+      elasticsearch_api:
+        hosts: "{{ groups['elasticsearch'] }}"
+        function: index
+        function_args:
+          index: test-1
+          doc_type: testdoc
+          id: "{{item}}"
+          body: '{ "title": "Document {{ item }}" }'
+      with_items: [ 1, 2, 3 ]
+      register: elasticsearch_api_result
+    - name: Verify that item is created
+      assert:
+        that:
+          - (elasticsearch_api_result.results | length) == 3
+          - elasticsearch_api_result.results[0].result.created == true
+          - elasticsearch_api_result.results[1].result.created == true
+          - elasticsearch_api_result.results[2].result.created == true
+
+    - name: Call cat API (list indices)
+      elasticsearch_api:
+        hosts: "{{ groups['elasticsearch'] }}"
+        api: cat
+        function: indices
+        function_args:
+          index: test-*
+      register: elasticsearch_api_result
+    - name: Verify that index is listed in results
+      assert:
+        that: elasticsearch_api_result.result | search('test-1')
+
+    - name: Call cluster API (get cluster stats)
+      elasticsearch_api:
+        hosts: "{{ groups['elasticsearch'] }}"
+        api: cluster
+        function: stats
+      register: elasticsearch_api_result
+    - name: Verify cluster name
+      assert:
+        that: elasticsearch_api_result.result.cluster_name == 'elasticsearch'
+
+    - name: Call nodes API (get node info)
+      elasticsearch_api:
+        hosts: "{{ groups['elasticsearch'] }}"
+        api: nodes
+        function: info
+      register: elasticsearch_api_result
+    - name: Verify cluster name
+      assert:
+        that: elasticsearch_api_result.result.cluster_name == 'elasticsearch'
+
+    - name: Call snapshot API (get snapshot status)
+      elasticsearch_api:
+        hosts: "{{ groups['elasticsearch'] }}"
+        api: snapshot
+        function: status
+      register: elasticsearch_api_result
+    - name: Verify result is an iterable
+      assert:
+        that: elasticsearch_api_result.result.snapshots is iterable
+
+    - name: Call helpers (reindex documents)
+      elasticsearch_api:
+        hosts: "{{ groups['elasticsearch'] }}"
+        api: helpers
+        function: reindex
+        function_args:
+          source_index: test-1
+          target_index: test-2
+      register: elasticsearch_api_result
+    - name: Verify that documents are reindexed
+      assert:
+        that: elasticsearch_api_result.result == [3, 0]
+
+    - name: Accept transport args (count documents)
+      elasticsearch_api:
+        hosts: "{{ groups['elasticsearch'] }}"
+        transport_args:
+          maxsize: 3
+        function: count
+        function_args:
+          index: test-1
+      register: elasticsearch_api_result
+    - name: Verify number of documents
+      assert:
+        that: elasticsearch_api_result.result.count == 3

@@ -1,0 +1,22 @@
+services:
+  - elasticsearch
+
+env:
+  - PLATFORM=centos-6
+  - PLATFORM=centos-7
+  - PLATFORM=debian-wheezy
+  - PLATFORM=debian-jessie
+  - PLATFORM=ubuntu-precise
+  - PLATFORM=ubuntu-trusty
+
+sudo: true
+
+install:
+  - curl -sLo - https://github.com/moul/travis-docker/raw/master/install.sh | sh -xe
+
+# Wait for Elasticsearch to spin up
+before_script:
+  - sleep 10
+
+script:
+  - ./run 'docker build -f tests/$PLATFORM.Dockerfile -t test-$PLATFORM . && docker run --name $PLATFORM test-$PLATFORM'

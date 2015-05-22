@@ -1,0 +1,7 @@
+---
+- name: Restart elasticsearch
+  service: name=elasticsearch state=restarted
+  notify: Wait for elasticsearch to be listening for connections
+
+- name: Wait for elasticsearch to be listening for connections
+  wait_for: port=9200
