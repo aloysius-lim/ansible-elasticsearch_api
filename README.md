@@ -1,6 +1,6 @@
 # Elasticsearch API
 
-[![Build Status](https://travis-ci.org/abtpeople/ansible-elasticsearch_api.svg)](https://travis-ci.org/abtpeople/ansible-elasticsearch_api)
+[![Build Status](https://travis-ci.org/aloysius-lim/ansible-elasticsearch_api.svg?branch=master)](https://travis-ci.org/aloysius-lim/ansible-elasticsearch_api)
 
 Ansible role and module to make API calls to Elasticsearch using the official [Python Elasticsearch Client](http://elasticsearch-py.readthedocs.org/en/master/).
 
@@ -175,5 +175,3 @@ Author Information
 ------------------
 
 Aloysius Lim ([GitHub](https://github.com/aloysius-lim))
-
-[About People](http://www.abtpeople.com/), a data science and design consultancy ([GitHub](https://github.com/abtpeople))
